@@ -23,8 +23,8 @@ function default_bta_operating_point(; kwargs...)
     defaults = (
         quad_currents=(256.0, 406.0, 543.0, 556.0, 128.0, 797.0, 727.0, 0.0,
                        466.0, 460.0, 300.0, 72.0, 288.0, 0.0, 153.0),
-        dipole_currents=(251.0, 3421.0, 112.0, 423.0),
-        corrector_currents=(0.0, 0.0, -5.5, 7.8, 0.0),
+        dipole_currents=(221.2, 3385.6, 106.6, 409.4), #(251.0, 3421.0, 112.0, 423.0),
+        corrector_currents=(0.0, 0.0, 0.0, 0.0, 0.0),
         E_ref=4.5 * 938.272e6 / 1.79285,
         species_ref=Species("proton"),
     )

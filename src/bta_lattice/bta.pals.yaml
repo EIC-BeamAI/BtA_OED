@@ -1,0 +1,2749 @@
+PALS:
+  extension_labels:
+    names:
+      SciBmad: SciBmad tracking settings
+  facility:
+    - beam_line_1__beginning:
+        ReferenceP:
+          pc_ref: 2.160054171660506e9
+          species_ref: proton
+        kind: BeginningEle
+    - patch_f6_1:
+        PatchP:
+          x_offset: 0.11866879999999999
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.009948376736367677
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.06985
+    - dhf6a:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.0135636
+          y_min: -0.0135636
+        MagneticMultipoleP:
+          Kn0L: -0.06357983682313131
+          Ks0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.2748259999999998
+    - patch_f6_2:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.0135636
+          y_min: -0.0135636
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.09494591130849155
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dhf6b:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.0173736
+          y_min: -0.0173736
+        MagneticMultipoleP:
+          Kn0L: -0.06749439000164284
+          Ks0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.429512
+    - patch_f6_3:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.0173736
+          y_min: -0.0173736
+        PatchP:
+          x_offset: 0.006096
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.02617993877991494
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dr001:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.0173736
+          y_min: -0.0173736
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.10286999999999999
+    - pueh001:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: BOTH_ENDS
+          shape: ELLIPTICAL
+          x_max: 0.05
+          x_min: -0.05
+          y_max: 0.05
+          y_min: -0.05
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.34925
+    - dr002:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: ELLIPTICAL
+          x_max: 0.04572
+          x_min: -0.04572
+          y_max: 0.04572
+          y_min: -0.04572
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.9954259999999999
+    - mw006:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.046482
+          x_min: -0.046482
+          y_max: 0.046482
+          y_min: -0.046482
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Marker
+        length: 0.0
+    - dr003:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.042926
+          x_min: -0.042926
+          y_max: 0.042926
+          y_min: -0.042926
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.422671875
+    - dv007:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        MagneticMultipoleP:
+          Bn0L: 0.0001586
+          Bs0L: 0.0
+          tilt0: 1.5707963267948966
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Kicker
+        length: 0.2286
+    - dr004:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.073421875
+    - dr005:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.09306718749999998
+    - qv1:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        MagneticMultipoleP:
+          Bn1L: -2.694318168656896
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr006:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.04572
+          x_min: -0.04572
+          y_max: 0.04572
+          y_min: -0.04572
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.2343546875
+    - dh1_u:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.030225999999999996
+          x_min: -0.030225999999999996
+          y_max: 0.030225999999999996
+          y_min: -0.030225999999999996
+        MagneticMultipoleP:
+          Bn0L: 0.13420630853698534
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.434975
+    - patch_d1:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.03630284844148206
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh1_d:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.030225999999999996
+          x_min: -0.030225999999999996
+          y_max: 0.030225999999999996
+          y_min: -0.030225999999999996
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.01815142422074103
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.0
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: 0.12734905189640944
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.41275
+    - dr007:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.23327359999999997
+    - qh2a:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        MagneticMultipoleP:
+          Bn1L: 4.329915074406496
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr008:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.11579859999999997
+    - qh2b:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        MagneticMultipoleP:
+          Bn1L: 4.329915074406496
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr009:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.043941999999999995
+          x_min: -0.043941999999999995
+          y_max: 0.043941999999999995
+          y_min: -0.043941999999999995
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.7855965999999999
+    - qv3:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.042926
+          x_min: -0.042926
+          y_max: 0.042926
+          y_min: -0.042926
+        MagneticMultipoleP:
+          Bn1L: -5.750462940152025
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr010:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.04927599999999999
+          x_min: -0.04927599999999999
+          y_max: 0.04927599999999999
+          y_min: -0.04927599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.5730494000000005
+    - foil024:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Marker
+        length: 0.0
+    - dr011:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.21602699999999997
+    - dv030:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044704
+          x_min: -0.044704
+          y_max: 0.044704
+          y_min: -0.044704
+        MagneticMultipoleP:
+          Bn0L: 0.0001
+          Bs0L: 0.0
+          tilt0: 1.5707963267948966
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Kicker
+        length: 0.2413
+    - dr012:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044449999999999996
+          x_min: -0.044449999999999996
+          y_max: 0.044449999999999996
+          y_min: -0.044449999999999996
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.36784279999999914
+    - qh4:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: ELLIPTICAL
+          x_max: 0.044449999999999996
+          x_min: -0.044449999999999996
+          y_max: 0.044449999999999996
+          y_min: -0.044449999999999996
+        MagneticMultipoleP:
+          Bn1L: 5.8788812478760955
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr013:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.044449999999999996
+          x_min: -0.044449999999999996
+          y_max: 0.044449999999999996
+          y_min: -0.044449999999999996
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.14577060000000003
+    - dr014:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.279781
+    - d23_1:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.1575054
+    - d23_2:
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.05061454830783556
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.316357
+    - patch_d23_1:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.05061454830783556
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh2:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: RECTANGULAR
+          x_max: 0.074168
+          x_min: -0.074168
+          y_max: 0.03175
+          y_min: -0.03175
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: 1.9867862849843199
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.7738598
+    - patch_d23_2:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.05061454830783556
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - d23_3:
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.05061454830783556
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.3095752
+    - d23_4:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.1515872
+    - dr016:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.06832619999999992
+    - qv5:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        MagneticMultipoleP:
+          Bn1L: -0.549753569897472
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr017:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.45248850000000007
+    - dr018:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.238125
+    - dr019:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.2755646
+    - d23_5:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.1575054
+    - d23_6:
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.05061454830783556
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.316357
+    - patch_d23_3:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.05061454830783556
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh3:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: RECTANGULAR
+          x_max: 0.074168
+          x_min: -0.074168
+          y_max: 0.03175
+          y_min: -0.03175
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: 1.9867862849843199
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.7738598
+    - patch_d23_4:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.05061454830783556
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - d23_7:
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.05061454830783556
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.07272197750953581
+          tilt_ref: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.3095752
+    - d23_8:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.1515872
+    - dr020:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.279781
+    - dr021:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.0865888
+    - qh6:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: 3.5017838648438593
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr022:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.19842500000000007
+    - xf059:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.06731
+          x_min: -0.06731
+          y_max: 0.06731
+          y_min: -0.06731
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.5461
+    - mw060:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.3937
+    - dr023:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.26301719999999995
+    - qv7:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: -3.2336347622207793
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr024:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 8.501507400000001
+    - qh8:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: 0.01907
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr025:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.7721347999999999
+    - dh4_u:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.036576
+          y_min: -0.036576
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.008552113334772213
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.0
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: 0.06160511514777207
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.2286
+    - patch_d4:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.017104226669544427
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh4_d:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.036576
+          x_min: -0.036576
+          y_max: 0.036576
+          y_min: -0.036576
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: 0.008552113334772213
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.0
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: 0.06160511514777207
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.2286
+    - dr026:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 1.8458943999999997
+    - qv9:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: -2.1069593168790317
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr027:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 2.4811232
+    - qh10:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: 2.07937473272
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr028:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 5.0301654
+    - mw125:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Marker
+        length: 0.0
+    - dr029:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.23495
+    - dh127:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn0L: 0.0001
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.2413
+    - dr030:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.831901
+    - qv11:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: -1.33385195
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr031:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 4.102024199999999
+    - qh12:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: 0.30963996216627204
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr032:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 4.212056799999999
+    - dh158:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn0L: 0.0001
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.2413
+    - dr033:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.415976
+    - qv13:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: -1.2778612289976319
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr034:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.5969256
+    - mw166:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.07467599999999999
+          x_min: -0.07467599999999999
+          y_max: 0.07467599999999999
+          y_min: -0.07467599999999999
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Marker
+        length: 0.0
+    - dr035:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 1.089076
+    - qh14:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn1L: 0.01907
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.4985
+    - dr036:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.19677399999999998
+    - patch:
+        PatchP:
+          x_offset: 0.004775199999999999
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.0
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dr037:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.15535909999999994
+    - dr038:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.035814
+          x_min: -0.035814
+          y_max: 0.035814
+          y_min: -0.035814
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.20636230000000003
+    - dh5_u:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.035814
+          x_min: -0.035814
+          y_max: 0.035814
+          y_min: -0.035814
+        BendP:
+          Kn0_from_g_ref: false
+          e1: -0.07039494649710462
+          e2: 0.0
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.0
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: -0.3202279599228782
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.35791126711435317
+    - patch_d5_1:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.07039494649710462
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh5_m:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.035814
+          x_min: -0.035814
+          y_max: 0.035814
+          y_min: -0.035814
+        MagneticMultipoleP:
+          Bn0L: -0.3721084673964171
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.41567099999999996
+    - patch_d5_2:
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.07039494649710462
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dh5_d:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.035814
+          x_min: -0.035814
+          y_max: 0.035814
+          y_min: -0.035814
+        BendP:
+          Kn0_from_g_ref: false
+          e1: 0.0
+          e2: -0.07039494649710462
+          edge1_int: 0.0
+          edge2_int: 0.0
+          g_ref: 0.0
+          tilt_ref: 0.0
+        MagneticMultipoleP:
+          Bn0L: -0.32201694293920713
+          Bs0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 0.3602925171143532
+    - dr039:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.035814
+          x_min: -0.035814
+          y_max: 0.035814
+          y_min: -0.035814
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.20614004999999996
+    - patch__2:
+        PatchP:
+          x_offset: -0.004775199999999999
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.0
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dr040:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.15558135000000003
+    - dr041:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 0.11325860000000007
+    - dv181:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.075438
+          x_min: -0.075438
+          y_max: 0.075438
+          y_min: -0.075438
+        MagneticMultipoleP:
+          Bn0L: 0.0001
+          Bs0L: 0.0
+          tilt0: 1.5707963267948966
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Kicker
+        length: 0.2413
+    - bcm:
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Instrument
+        length: 0.9396628399999999
+    - qv15:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: ELLIPTICAL
+          x_max: 0.042926
+          x_min: -0.042926
+          y_max: 0.042926
+          y_min: -0.042926
+        MagneticMultipoleP:
+          Bn1L: -1.5794013909385058
+          Bs1L: 0.0
+          tilt1: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: MatrixKick
+        kind: Quadrupole
+        length: 0.5588
+    - dr042:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: ELLIPTICAL
+          x_max: 0.0424942
+          x_min: -0.0424942
+          y_max: 0.0424942
+          y_min: -0.0424942
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: DriftKick
+        kind: Drift
+        length: 2.1898203599999997
+    - dhl20a:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.037846
+          x_min: -0.037846
+          y_max: 0.0235458
+          y_min: -0.0235458
+        MagneticMultipoleP:
+          Kn0L: 0.03517626995141463
+          Ks0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.1763375
+    - patch_l20_1:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.037846
+          x_min: -0.037846
+          y_max: 0.0235458
+          y_min: -0.0235458
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.06894050545377602
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - dhl20b:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.037846
+          x_min: -0.037846
+          y_max: 0.0235458
+          y_min: -0.0235458
+        MagneticMultipoleP:
+          Kn0L: 0.033764235502361385
+          Ks0L: 0.0
+          tilt0: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters:
+              opt_scheme: true
+              order: 4
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: BendKick
+        kind: Bend
+        length: 1.089025
+    - patch_l20_2:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: ENTRANCE_END
+          shape: RECTANGULAR
+          x_max: 0.037846
+          x_min: -0.037846
+          y_max: 0.0235458
+          y_min: -0.0235458
+        PatchP:
+          x_offset: 0.0
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.01658062789394613
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
+    - patch_l20_3:
+        ApertureP:
+          aperture_active: true
+          aperture_shifts_with_body: true
+          location: EXIT_END
+          shape: ELLIPTICAL
+          x_max: 0.10794999999999999
+          x_min: -0.10794999999999999
+          y_max: 0.10794999999999999
+          y_min: -0.10794999999999999
+        PatchP:
+          x_offset: 0.06508749999999999
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: 0.0
+          z_offset: 0.0
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.20875625
+    - beam_line_1:
+        kind: BeamLine
+        line:
+          - beam_line_1__beginning
+          - patch_f6_1
+          - dhf6a
+          - patch_f6_2
+          - dhf6b
+          - patch_f6_3
+          - dr001
+          - pueh001
+          - dr002
+          - mw006
+          - dr003
+          - dv007
+          - dr004
+          - dr005
+          - qv1
+          - dr006
+          - dh1_u
+          - patch_d1
+          - dh1_d
+          - dr007
+          - qh2a
+          - dr008
+          - qh2b
+          - dr009
+          - qv3
+          - dr010
+          - foil024
+          - dr011
+          - dv030
+          - dr012
+          - qh4
+          - dr013
+          - dr014
+          - d23_1
+          - d23_2
+          - patch_d23_1
+          - dh2
+          - patch_d23_2
+          - d23_3
+          - d23_4
+          - dr016
+          - qv5
+          - dr017
+          - dr018
+          - dr019
+          - d23_5
+          - d23_6
+          - patch_d23_3
+          - dh3
+          - patch_d23_4
+          - d23_7
+          - d23_8
+          - dr020
+          - dr021
+          - qh6
+          - dr022
+          - xf059
+          - mw060
+          - dr023
+          - qv7
+          - dr024
+          - qh8
+          - dr025
+          - dh4_u
+          - patch_d4
+          - dh4_d
+          - dr026
+          - qv9
+          - dr027
+          - qh10
+          - dr028
+          - mw125
+          - dr029
+          - dh127
+          - dr030
+          - qv11
+          - dr031
+          - qh12
+          - dr032
+          - dh158
+          - dr033
+          - qv13
+          - dr034
+          - mw166
+          - dr035
+          - qh14
+          - dr036
+          - patch
+          - dr037
+          - dr038
+          - dh5_u
+          - patch_d5_1
+          - dh5_m
+          - patch_d5_2
+          - dh5_d
+          - dr039
+          - patch__2
+          - dr040
+          - dr041
+          - dv181
+          - bcm
+          - qv15
+          - dr042
+          - dhl20a
+          - patch_l20_1
+          - dhl20b
+          - patch_l20_2
+          - patch_l20_3
+    - bta:
+        branches:
+          - beam_line_1:
+              periodic: false
+        kind: Lattice
+  notes:
+    - Translated from SciBmad; numerical snapshot of current parameter values.

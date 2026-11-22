@@ -838,6 +838,12 @@ function _bta_geometry()
             L=(1/2 + 42 + 3/8)inch,
             #g_ref=0,
             Kn0L=(3+57/60)π/180 * (38+7/64)/(39+45/64 + 38+7/64),
+            aperture_shape=ApertureShape.Rectangular,
+            aperture_at=ApertureAt.Entrance,
+            x1_limit=-1.490inch,
+            x2_limit=1.490inch,
+            y1_limit=-0.927inch,
+            y2_limit=0.927inch,
         ),
         Patch(; name="patch_l20_2",
             dy_rot=-(57/60)π/180,
@@ -849,7 +855,7 @@ function _bta_geometry()
             y2_limit=0.927inch,
         ),
         Patch(; name="patch_l20_3",
-            dx=(1.490 + 2+3/16 - 0.406 - 0.709)inch, # centerline of 1/8" diameter holes
+            dx=(1.490 + 2+3/16 - 0.406 - 0.709)inch, # AGS injection target is zero at patch exit
             L = (-3/8 + 3+1/4 + 5+11/32)inch,
             aperture_shape=ApertureShape.Elliptical,
             aperture_at=ApertureAt.Exit,

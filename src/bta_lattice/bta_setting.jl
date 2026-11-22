@@ -3,14 +3,30 @@ function _normal_field(value, order)
     BMultipoleParams([value], [z], [z], [order], [false], [true])
 end
 
+# Write a field again whenever either value carries an AD tag. Primal equality
+# alone does not establish that two dual values have the same derivatives.
+_same_primal(a, b) = !(a isa ForwardDiff.Dual || b isa ForwardDiff.Dual) && isequal(a, b)
+
+function _set_normal_field!(element, value, order)
+    group = element.BMultipoleParams
+    if isnothing(group) || length(group.n) != 1 || !_same_primal(only(group.n), value)
+        element.BMultipoleParams = _normal_field(value, order)
+    end
+end
+
 """Set complete multipole groups, preserving ForwardDiff's nested dual types."""
 function set_bta_fields!(lattice::Beamline, op;
-                         quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATION)
-    lattice.E_ref = op.E_ref
-    elements = Dict(Symbol(ele.name) => ele for ele in lattice.line)
+                         quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATION,
+                         elements=Dict(Symbol(ele.name) => ele for ele in lattice.line),
+                         reuse_groups=false)
     fields = bta_fields(op; quad_factors, calibration)
+    _same_primal(lattice.E_ref, op.E_ref) || (lattice.E_ref = op.E_ref)
     for (j, names) in enumerate(QUAD_ELEMENT_NAMES), name in names
-        elements[name].BMultipoleParams = _normal_field(fields.quadrupoles[j], 2)
+        if reuse_groups
+            _set_normal_field!(elements[name], fields.quadrupoles[j], 2)
+        else
+            elements[name].BMultipoleParams = _normal_field(fields.quadrupoles[j], 2)
+        end
     end
     dipole_pieces = (
         (:dh1_u, 1, 17.125 / 33.375), (:dh1_d, 1, 16.25 / 33.375),
@@ -20,10 +36,20 @@ function set_bta_fields!(lattice::Beamline, op;
         (:dh5_d, 4, 0.360 / 1.134),
     )
     for (name, j, fraction) in dipole_pieces
-        elements[name].BMultipoleParams = _normal_field(fields.dipoles[j] * fraction, 1)
+        value = fields.dipoles[j] * fraction
+        if reuse_groups
+            _set_normal_field!(elements[name], value, 1)
+        else
+            elements[name].BMultipoleParams = _normal_field(value, 1)
+        end
     end
     for (j, name) in enumerate(CORRECTOR_NAMES)
         field = fields.correctors[j]
+        group = elements[name].BMultipoleParams
+        if reuse_groups && !isnothing(group) && length(group.n) == 1 &&
+                _same_primal(only(group.n), field)
+            continue
+        end
         z = zero(field)
         # Preserve the source's magnetic orientation, including its sign convention.
         tilt = j in (1, 2, 5) ? z + π / 2 : z
@@ -37,16 +63,17 @@ end
 Set supply-wise quad offsets relative to the surveyed source offsets.
 The two QH2 pieces share one offset. Repeated calls do not accumulate shifts.
 """
-function set_bta_misalignments!(lattice; quad_dx=zeros(15), quad_dy=zeros(15))
+function set_bta_misalignments!(lattice; quad_dx=zeros(15), quad_dy=zeros(15),
+                                elements=Dict(Symbol(ele.name) => ele for ele in lattice.line))
     length(quad_dx) == length(quad_dy) == 15 ||
         throw(DimensionMismatch("15 offsets per plane required"))
-    elements = Dict(Symbol(ele.name) => ele for ele in lattice.line)
     for (j, names) in enumerate(QUAD_ELEMENT_NAMES), name in names
         ele = elements[name]
-        if !(isapprox(quad_dx[j], zero(quad_dx[j])) && isapprox(quad_dy[j], zero(quad_dy[j])))
-            ele.AlignmentParams = AlignmentParams(
-                x_offset=quad_dx[j], y_offset=quad_dy[j]
-            )
+        dx, dy = quad_dx[j], quad_dy[j]
+        if dx isa ForwardDiff.Dual || dy isa ForwardDiff.Dual || !iszero(dx) || !iszero(dy)
+            ele.AlignmentParams = AlignmentParams(x_offset=dx, y_offset=dy)
+        elseif !isnothing(ele.AlignmentParams)
+            ele.AlignmentParams = nothing
         end
     end
     lattice

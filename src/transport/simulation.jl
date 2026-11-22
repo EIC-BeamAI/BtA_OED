@@ -1,80 +1,86 @@
-"""
-    UncoupledBeamState(; centroid, epsilon_x, beta_x, alpha_x, epsilon_y, beta_y, alpha_y)
+"""Entrance centroid `(x, px, y, py, delta)` and uncoupled betatron optics.
 
-Unknown transverse centroid `(x, px, y, py)` and uncoupled betatron second
-moments represented by emittance/Twiss parameters. Positions are metres,
-momenta are canonical normalized momenta, and geometric emittances are m⋅rad.
-The example defaults match `default_beam_moments`, not a measured beam estimate.
-Momentum spread, dispersion, mean delta and mean z are fixed simulation keywords.
+Horizontal dispersion and RMS relative momentum spread determine the
+momentum-dependent part of the covariance. Longitudinal position is fixed
+separately in transport.
 """
 struct UncoupledBeamState{T<:Real}
-    centroid::NTuple{4,T}
+    centroid::NTuple{5,T}
     epsilon_x::T
     beta_x::T
     alpha_x::T
     epsilon_y::T
     beta_y::T
     alpha_y::T
+    eta_x::T
+    eta_px::T
+    sigma_delta::T
 end
 
-function UncoupledBeamState(; 
-        centroid=(0.100092799, 0.0033, 0.0, 0.0),
-        epsilon_x=1e-6, beta_x=12.6, alpha_x=1.8,
-        epsilon_y=1e-6, beta_y=4.1, alpha_y=-0.65
-    )
-    length(centroid) == 4 || throw(DimensionMismatch("centroid must be (x, px, y, py)"))
-    values = promote(centroid..., epsilon_x, beta_x, alpha_x, epsilon_y, beta_y, alpha_y, 0.0)
+const BEAM_PARAMETER_NAMES = (:x, :px, :y, :py, :δ0, :β_x, :α_x, :β_y, :α_y,
+    :η_x, :η_px, :ε_x, :ε_y, :σ_δ)
+
+function UncoupledBeamState(; centroid=(0.1013, 0.00174, 0.0, 0.0, 0.0),
+                            epsilon_x=1e-6, beta_x=12.6, alpha_x=1.8,
+                            epsilon_y=1e-6, beta_y=4.1, alpha_y=-0.65,
+                            eta_x=2.7, eta_px=-0.42, sigma_delta=1e-4)
+    length(centroid) == 5 || throw(DimensionMismatch("centroid must be (x, px, y, py, delta)"))
+    values = promote(centroid..., epsilon_x, beta_x, alpha_x, epsilon_y, beta_y,
+                     alpha_y, eta_x, eta_px, sigma_delta)
     all(isfinite, values) || throw(ArgumentError("beam state must be finite"))
-    all(j -> values[j] > 0, (5, 6, 8, 9)) ||
+    all(j -> values[j] > 0, (6, 7, 9, 10)) ||
         throw(ArgumentError("emittances and beta functions must be positive"))
-    UncoupledBeamState(values[1:4], values[5:10]...)
+    sigma_delta >= 0 || throw(ArgumentError("momentum spread must be nonnegative"))
+    UncoupledBeamState(values[1:5], values[6:end]...)
 end
 
 function UncoupledBeamState(parameters::AbstractVector)
-    length(parameters) == 10 || throw(DimensionMismatch("10 beam-state parameters required"))
-    UncoupledBeamState(; centroid=parameters[1:4], epsilon_x=parameters[5],
-        beta_x=parameters[6], alpha_x=parameters[7], epsilon_y=parameters[8],
-        beta_y=parameters[9], alpha_y=parameters[10])
+    length(parameters) == length(BEAM_PARAMETER_NAMES) ||
+        throw(DimensionMismatch("expected $(length(BEAM_PARAMETER_NAMES)) beam parameters"))
+    UncoupledBeamState(; centroid=parameters[1:5],
+        beta_x=parameters[6], alpha_x=parameters[7], beta_y=parameters[8],
+        alpha_y=parameters[9], eta_x=parameters[10], eta_px=parameters[11],
+        epsilon_x=parameters[12], epsilon_y=parameters[13], sigma_delta=parameters[14])
 end
 
 UncoupledBeamState(state::NamedTuple) = UncoupledBeamState(; state...)
 
-"""Return `(x, px, y, py, epsilon_x, beta_x, alpha_x, epsilon_y, beta_y, alpha_y)`."""
+"""Pack the entrance state in BEAM_PARAMETER_NAMES order."""
 uncoupled_beam_parameters(beam::UncoupledBeamState) =
-    [beam.centroid..., beam.epsilon_x, beam.beta_x, beam.alpha_x,
-     beam.epsilon_y, beam.beta_y, beam.alpha_y]
+    [beam.centroid..., beam.beta_x, beam.alpha_x, beam.beta_y, beam.alpha_y,
+     beam.eta_x, beam.eta_px, beam.epsilon_x, beam.epsilon_y, beam.sigma_delta]
 
-"""Column names for the 30-input multiwire Jacobian: 15 quad A, 5 steering A, 10 beam."""
+"""Column names for the multiwire Jacobian: quad currents, corrector currents, and beam."""
 bta_input_names() = vcat(
     [Symbol("quad_current_", name) for name in QUAD_NAMES],
-    [Symbol("steering_current_", name) for name in CORRECTOR_NAMES],
-    [:x, :px, :y, :py, :epsilon_x, :beta_x, :alpha_x, :epsilon_y, :beta_y, :alpha_y],
+    [Symbol("corrector_current_", name) for name in CORRECTOR_NAMES],
+    collect(BEAM_PARAMETER_NAMES),
 )
 
-function pack_bta_inputs(quad_currents, steering_currents, beam::UncoupledBeamState)
+function pack_bta_inputs(quad_currents, corrector_currents, beam::UncoupledBeamState)
     length(quad_currents) == 15 || throw(DimensionMismatch("15 quad currents required"))
-    length(steering_currents) == 5 || throw(DimensionMismatch("5 steering currents required"))
-    inputs = vcat(collect(quad_currents), collect(steering_currents), uncoupled_beam_parameters(beam))
+    length(corrector_currents) == 5 || throw(DimensionMismatch("5 corrector currents required"))
+    inputs = vcat(collect(quad_currents), collect(corrector_currents), uncoupled_beam_parameters(beam))
     all(isfinite, inputs) || throw(ArgumentError("magnet currents and beam state must be finite"))
     inputs
 end
 
-pack_bta_inputs(quad_currents, steering_currents, beam::NamedTuple) =
-    pack_bta_inputs(quad_currents, steering_currents, UncoupledBeamState(beam))
+pack_bta_inputs(quad_currents, corrector_currents, beam::NamedTuple) =
+    pack_bta_inputs(quad_currents, corrector_currents, UncoupledBeamState(beam))
 
-function _simulation_beam(
-        beam::UncoupledBeamState;
-        sigma_delta=1e-4, eta_x=2.7, eta_px=-0.42, delta0=0.0, z0=0.0
-    )
-    beam_moments_from_twiss(; mean=[beam.centroid..., z0, delta0],
-        epsilon_x=beam.epsilon_x, beta_x=beam.beta_x, alpha_x=beam.alpha_x,
-        epsilon_y=beam.epsilon_y, beta_y=beam.beta_y, alpha_y=beam.alpha_y,
-        sigma_delta, eta_x, eta_px)
-end
+_beam_optics(beam::UncoupledBeamState) =
+    (; beam.epsilon_x, beam.beta_x, beam.alpha_x, beam.epsilon_y, beam.beta_y,
+       beam.alpha_y, beam.eta_x, beam.eta_px, beam.sigma_delta)
+
+_canonical_mean(beam::UncoupledBeamState, z0) =
+    [beam.centroid[1:4]..., z0, beam.centroid[5]]
+
+beam_moments_from_twiss(beam::UncoupledBeamState; z0=0.0, mean=_canonical_mean(beam, z0)) =
+    beam_moments_from_twiss(; mean, _beam_optics(beam)...)
 
 """
     bta_measurements(inputs; ...)
-    bta_measurements(quad_currents, steering_currents, beam_state; ...)
+    bta_measurements(quad_currents, corrector_currents, beam_state; ...)
 
 Deterministic loss-free multiwire summaries, `(mean_x, sigma_x, mean_y, sigma_y)`
 in mm, one observation per row. `inputs` has the ordering from `bta_input_names()`.
@@ -85,20 +91,21 @@ provided separately by `simulate_bta`.
 function bta_measurements(
         inputs::AbstractVector;
         op=default_bta_operating_point(), observations=PROFILE_NAMES, moment_order=1,
-        sigma_delta=1e-4, eta_x=2.7, eta_px=-0.42, delta0=0.0, z0=0.0,
+        z0=0.0,
         quad_factors=ones(15), quad_dx=zeros(15), quad_dy=zeros(15),
         calibration=DEFAULT_BTA_CALIBRATION
     )
-    length(inputs) == 30 || throw(DimensionMismatch("30 simulation inputs required"))
-    state = UncoupledBeamState(inputs[21:30])
-    beam = _simulation_beam(state; sigma_delta, eta_x, eta_px, delta0, z0)
+    length(inputs) == 20 + length(BEAM_PARAMETER_NAMES) ||
+        throw(DimensionMismatch("wrong number of magnet and beam inputs"))
+    state = UncoupledBeamState(inputs[21:end])
+    beam = beam_moments_from_twiss(state; z0)
     setting = merge(op, (; quad_currents=inputs[1:15], corrector_currents=inputs[16:20]))
     predict_profiles(beam; op=setting, observations, moment_order, quad_factors,
                      quad_dx, quad_dy, calibration)
 end
 
-bta_measurements(quad_currents, steering_currents, beam_state; kwargs...) =
-    bta_measurements(pack_bta_inputs(quad_currents, steering_currents, beam_state); kwargs...)
+bta_measurements(quad_currents, corrector_currents, beam_state; kwargs...) =
+    bta_measurements(pack_bta_inputs(quad_currents, corrector_currents, beam_state); kwargs...)
 
 function _measurement_value_jacobian(inputs, options, ::Val{C}) where {C}
     f = p -> vec(bta_measurements(p; options...))
@@ -121,24 +128,9 @@ function _summary_noise_scale(noise_std_mm, n)
     sigma
 end
 
-function _gaussian_particles(
-        state::UncoupledBeamState, normals;
-        sigma_delta, eta_x, eta_px, delta0, z0
-    )
-    # An explicit factor keeps the same base random draws across changes in the
-    # beam state. It also supports zero momentum spread and a fixed z coordinate.
-    L = zeros(6, 5)
-    L[1, 1] = sqrt(state.epsilon_x * state.beta_x)
-    L[2, 1] = -sqrt(state.epsilon_x / state.beta_x) * state.alpha_x
-    L[2, 2] = sqrt(state.epsilon_x / state.beta_x)
-    L[3, 3] = sqrt(state.epsilon_y * state.beta_y)
-    L[4, 3] = -sqrt(state.epsilon_y / state.beta_y) * state.alpha_y
-    L[4, 4] = sqrt(state.epsilon_y / state.beta_y)
-    L[1, 5] = eta_x * sigma_delta
-    L[2, 5] = eta_px * sigma_delta
-    L[6, 5] = sigma_delta
-    mean = [state.centroid..., z0, delta0]
-    normals * transpose(L) .+ transpose(mean)
+function _gaussian_particles(state::UncoupledBeamState, normals; z0)
+    L = _twiss_factor(; _beam_optics(state)...)
+    normals * transpose(L) .+ transpose(_canonical_mean(state, z0))
 end
 
 function _particle_summary(coordinates, alive)
@@ -182,13 +174,13 @@ function _sampled_distribution(lattice, coordinates, observations)
 end
 
 """
-    simulate_bta(quad_currents, steering_currents, beam_state=UncoupledBeamState(); ...)
+    simulate_bta(beam_state=UncoupledBeamState(); op=default_bta_operating_point(), ...)
 
-One simulation call for design/control/inference. Inputs are 15 quadrupole
-currents [A], five steering currents [A], and a transverse `UncoupledBeamState`
-(or an equivalent keyword NamedTuple). The default tracks 1000 Gaussian particles.
+Simulate an entrance `UncoupledBeamState` (or an equivalent keyword NamedTuple)
+at operating point `op`, which supplies all magnet currents. The default
+tracks 1000 Gaussian particles.
 
-Returns clean/noisy loss-free moment observations and their 16 × 30 Jacobian,
+Returns clean/noisy loss-free moment observations and their 16 × 34 Jacobian,
 loss-aware particle observations at the harps, the surviving final distribution,
 and fractional beam loss. Columns follow `bta_input_names()`, rows follow
 `vec(observations.noiseless)` (monitor index varies fastest). Noise is independent
@@ -205,39 +197,35 @@ Lost particles' `final_distribution.all_coordinates` are last tracked states,
 not end-of-line coordinates. Only `final_distribution.coordinates` contains
 survivors at the end. If no particle reaches a harp, its particle summary is NaN.
 """
-function simulate_bta(quad_currents, steering_currents,
-        beam_state::Union{UncoupledBeamState,NamedTuple}=UncoupledBeamState();
+function simulate_bta(beam_state::Union{UncoupledBeamState,NamedTuple}=UncoupledBeamState();
         op=default_bta_operating_point(), observations=PROFILE_NAMES,
         noise_std_mm=0.1, rng::AbstractRNG=Random.default_rng(), nparticles::Integer=1000,
         standard_particles=nothing, compute_jacobian::Bool=true, chunksize::Integer=4,
-        moment_order=1, sigma_delta=1e-4, eta_x=2.7, eta_px=-0.42, delta0=0.0, z0=0.0,
+        moment_order=1, z0=0.0,
         quad_factors=ones(15), quad_dx=zeros(15), quad_dy=zeros(15),
         calibration=DEFAULT_BTA_CALIBRATION, apertures::Bool=true
     )
     nparticles > 0 || throw(ArgumentError("nparticles must be positive"))
     chunksize > 0 || throw(ArgumentError("chunksize must be positive"))
     state = beam_state isa NamedTuple ? UncoupledBeamState(beam_state) : beam_state
-    inputs = Float64.(pack_bta_inputs(quad_currents, steering_currents, state))
+    inputs = Float64.(pack_bta_inputs(op.quad_currents, op.corrector_currents, state))
     sigma = _summary_noise_scale(noise_std_mm, length(observations))
-    all(isfinite, (sigma_delta, eta_x, eta_px, delta0, z0)) && sigma_delta >= 0 ||
-        throw(ArgumentError("fixed beam settings must be finite; sigma_delta must be nonnegative"))
+    isfinite(z0) || throw(ArgumentError("longitudinal position must be finite"))
     if !isnothing(standard_particles)
         size(standard_particles) == (nparticles, 5) ||
             throw(DimensionMismatch("standard_particles must be ($nparticles, 5)"))
         all(isfinite, standard_particles) || throw(ArgumentError("standard particles must be finite"))
     end
-    options = (; op, observations, moment_order, sigma_delta, eta_x, eta_px,
-                delta0, z0, quad_factors, quad_dx, quad_dy, calibration)
+    options = (; op, observations, moment_order, z0, quad_factors, quad_dx, quad_dy, calibration)
     clean = bta_measurements(inputs; options...)
     jacobian = compute_jacobian ?
-        _measurement_value_jacobian(inputs, options, Val(min(chunksize, 30))) : nothing
+        _measurement_value_jacobian(inputs, options, Val(min(chunksize, length(inputs)))) : nothing
     perturbation = sigma .* randn(rng, size(clean)...)
     noisy = clean + perturbation
     normals = isnothing(standard_particles) ? randn(rng, nparticles, 5) : Float64.(standard_particles)
     # The particle path is deliberately primal; differentiate bta_measurements.
-    primal_state = UncoupledBeamState(inputs[21:30])
-    initial_particles = _gaussian_particles(primal_state, normals;
-        sigma_delta, eta_x, eta_px, delta0, z0)
+    primal_state = UncoupledBeamState(inputs[21:end])
+    initial_particles = _gaussian_particles(primal_state, normals; z0)
     setting = merge(op, (; quad_currents=inputs[1:15], corrector_currents=inputs[16:20]))
     lattice = bta_lattice(setting; apertures, quad_factors, quad_dx, quad_dy, calibration)
     tracked = _sampled_distribution(lattice, initial_particles, observations)
@@ -255,4 +243,10 @@ function simulate_bta(quad_currents, steering_currents,
         n_particles=nparticles, n_lost=tracked.lost,
         initial_distribution=initial_particles,
     )
+end
+
+# Preserve positional current overrides for existing callers.
+function simulate_bta(quad_currents, corrector_currents, beam_state=UncoupledBeamState();
+                      op=default_bta_operating_point(), kwargs...)
+    simulate_bta(beam_state; op=merge(op, (; quad_currents, corrector_currents)), kwargs...)
 end

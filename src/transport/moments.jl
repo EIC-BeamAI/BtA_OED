@@ -21,13 +21,25 @@ end
 _primal(x) = x
 _primal(x::ForwardDiff.Dual) = _primal(ForwardDiff.value(x))
 
-function beam_moments_from_twiss(; mean=zeros(6), epsilon_x=1e-6, beta_x=12.6,
-    alpha_x=1.8, epsilon_y=1e-6, beta_y=4.1, alpha_y=-0.65,
-    eta_x=2.7, eta_px=-0.42, sigma_delta=1e-4)
+"""Build entrance moments from uncoupled betatron optics and linear dispersion.
+
+The transverse centroid and momentum offset are independent inputs. Dispersion
+adds correlations around that centroid through the RMS relative momentum spread.
+Pass a full canonical mean with `mean` or use `centroid`, `delta0`, and `z0`.
+"""
+function beam_moments_from_twiss(; centroid=(0.0, 0.0, 0.0, 0.0), delta0=0.0, z0=0.0,
+                                mean=[centroid..., z0, delta0], optics...)
+    L = _twiss_factor(; optics...)
+    BeamMoments(mean, L * transpose(L))
+end
+
+function _twiss_factor(; epsilon_x=1e-6, beta_x=12.6, alpha_x=1.8,
+                         epsilon_y=1e-6, beta_y=4.1, alpha_y=-0.65,
+                         eta_x=2.7, eta_px=-0.42, sigma_delta=1e-4)
     beta_x > 0 && beta_y > 0 && epsilon_x > 0 && epsilon_y > 0 && sigma_delta >= 0 ||
         throw(ArgumentError("beta/emittance must be positive and momentum spread nonnegative"))
-    T = promote_type(eltype(mean), typeof.((epsilon_x, beta_x, alpha_x,
-        epsilon_y, beta_y, alpha_y, eta_x, eta_px, sigma_delta))...)
+    T = promote_type(typeof.((epsilon_x, beta_x, alpha_x, epsilon_y, beta_y, alpha_y,
+        eta_x, eta_px, sigma_delta))...)
     L = zeros(T, 6, 5)
     L[1, 1] = sqrt(epsilon_x * beta_x)
     L[2, 1] = -sqrt(epsilon_x / beta_x) * alpha_x
@@ -35,18 +47,15 @@ function beam_moments_from_twiss(; mean=zeros(6), epsilon_x=1e-6, beta_x=12.6,
     L[3, 3] = sqrt(epsilon_y * beta_y)
     L[4, 3] = -sqrt(epsilon_y / beta_y) * alpha_y
     L[4, 4] = sqrt(epsilon_y / beta_y)
-    L[1, 5] = eta_x * sigma_delta
-    L[2, 5] = eta_px * sigma_delta
-    L[6, 5] = sigma_delta
-    BeamMoments(mean, L * transpose(L))
+    L[:, 5] .= sigma_delta .* (eta_x, eta_px, 0, 0, 0, 1)
+    L
 end
 
 """
-Illustrative entrance beam, not a measured beam estimate. The centroid is one
-full-line survivor from the archived acceptance scan; the lattice starts before
-the extraction-coordinate patch, where zero is not the beamline centre.
+Illustrative entrance beam, not a measured beam estimate. The lattice starts
+before the extraction-coordinate patch, where zero is not the beamline centre.
 """
-default_beam_moments(; mean=[0.100092799, 0.0033, 0.0, 0.0, 0.0, 0.0], kwargs...) =
+default_beam_moments(; mean=[0.1013, 0.00174, 0.0, 0.0, 0.0, 0.0], kwargs...) =
     beam_moments_from_twiss(; mean, kwargs...)
 
 function _observation_indices(lattice, names)
@@ -76,25 +85,23 @@ function _active_mean(lattice, mean)
     [x + anchor for x in mean]
 end
 
-function _transport_coordinates(lattice, mean, indices)
-    state = reshape(_active_mean(lattice, mean), 1, 6)
+function _transport_coordinates(lattice, mean, indices; promoted=false)
+    coordinates = promoted ? collect(mean) : _active_mean(lattice, mean)
+    state = reshape(coordinates, 1, 6)
     bunch = Bunch(state; species=lattice.species_ref, p_over_q_ref=lattice.p_over_q_ref)
-    snapshots = Vector{Vector{eltype(state)}}(undef, length(indices))
-    for (j, ele) in enumerate(lattice.line)
-        BeamTracking.track!(bunch, ele; rf_on=false, use_cpu_multithreading=false,
+    result = Vector{eltype(state)}(undef, 6length(indices))
+    for j in 1:maximum(indices)
+        element = lattice.line[j]
+        BeamTracking.track!(bunch, element; rf_on=false, use_cpu_multithreading=false,
                             use_explicit_SIMD=false)
-        all(==(BeamTracking.STATE_ALIVE), bunch.coords.state) ||
-            error("reference trajectory failed at $(ele.name), state $(bunch.coords.state); " *
-                  "check the input centroid and operating point")
-        for k in findall(==(j), indices)
-            snapshots[k] = copy(vec(bunch.coords.v))
+        only(bunch.coords.state) == BeamTracking.STATE_ALIVE ||
+            error("reference trajectory failed at $(element.name); check centroid and settings")
+        for k in eachindex(indices)
+            if indices[k] == j
+                copyto!(result, 6(k - 1) + 1, bunch.coords.v, 1, 6)
+            end
         end
-        j >= maximum(indices) && break
     end
-    all(==(BeamTracking.STATE_ALIVE), bunch.coords.state) ||
-        error("reference trajectory failed at or before $(lattice.line[maximum(indices)].name); " *
-              "check input centroid/operating point and use apertures=false for moments")
-    result = reduce(vcat, snapshots)
     all(isfinite, result) || error("nonfinite trajectory; check the operating point")
     result
 end
@@ -125,7 +132,11 @@ function transport_tensors(mean; hessians=false, op=default_bta_operating_point(
     isempty(observations) && throw(ArgumentError("at least one observation required"))
     lattice = bta_lattice(op; apertures=false, quad_factors, quad_dx, quad_dy, calibration)
     indices = _observation_indices(lattice, observations)
-    f = x -> _transport_coordinates(lattice, x, indices)
+    _transport_tensors(lattice, mean, indices, observations; hessians)
+end
+
+function _transport_tensors(lattice, mean, indices, observations; hessians=false)
+    f = x -> _transport_coordinates(lattice, x, indices; promoted=true)
     # Promote before seeding coordinate derivatives. Captured magnet duals must
     # be the value type of the inner dual, not a separately ordered peer tag.
     active_mean = _active_mean(lattice, mean)
@@ -180,6 +191,10 @@ end
 """Rows are observations; columns `(mean_x, sigma_x, mean_y, sigma_y)`, in mm."""
 function predict_profiles(beam::BeamMoments=default_beam_moments(); kwargs...)
     moments = predict_moments(beam; kwargs...)
+    _profile_summaries(moments)
+end
+
+function _profile_summaries(moments)
     n = size(moments.means, 2)
     [column == 1 ? 1000 * moments.means[1, k] :
      column == 2 ? 1000 * sqrt(moments.covariances[1, 1, k]) :

@@ -1,0 +1,6 @@
+.julia_depot/
+*.log
+
+.DS_Store
+
+/output/
