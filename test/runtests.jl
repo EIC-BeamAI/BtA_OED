@@ -20,10 +20,14 @@ central(f, x, h) = (f(x + h) - f(x - h)) / (2h)
     # Previously ignored supply settings must now reach every corresponding piece.
     changed = default_bta_operating_point(
         dipole_currents=(260.0, 3421.0, 120.0, 423.0),
+        septum_scales=(0.98, 1.02),
         quad_currents=setentry(op.quad_currents, 10.0, 14))
     moved = bta_lattice(changed)
     byname(bl) = Dict(Symbol(e.name) => e for e in bl.line)
     a, b = byname(lattice), byname(moved)
+    septa = (:dhf6a, :dhf6b, :dhl20a, :dhl20b)
+    @test [b[name].Kn0L for name in septa] ≈
+          [a[name].Kn0L for name in septa] .* [0.98, 0.98, 1.02, 1.02]
     for name in (:dh1_u, :dh1_d, :dh4_u, :dh4_d, :qh14)
         @test a[name].BMultipoleParams.n != b[name].BMultipoleParams.n
     end

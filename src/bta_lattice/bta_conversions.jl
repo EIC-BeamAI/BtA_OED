@@ -5,6 +5,14 @@ const QUAD_ELEMENT_NAMES = ((:qv1,), (:qh2a, :qh2b), (:qv3,), (:qh4,),
     (:qv5,), (:qh6,), (:qv7,), (:qh8,), (:qv9,), (:qh10,), (:qv11,),
     (:qh12,), (:qv13,), (:qh14,), (:qv15,))
 const CORRECTOR_NAMES = (:dv007, :dv030, :dh127, :dh158, :dv181)
+const SEPTUM_NAMES = (:d6, :l20)
+# Nominal integrated normalized strengths, with the original split within each pair.
+const _SEPTUM_KN0L = (
+    dhf6a=-7.51π/180 * 49.213/(49.213+52.243),
+    dhf6b=-7.51π/180 * 52.243/(49.213+52.243),
+    dhl20a=(3+57/60)π/180 * (39+45/64)/(39+45/64 + 38+7/64),
+    dhl20b=(3+57/60)π/180 * (38+7/64)/(39+45/64 + 38+7/64),
+)
 const PROFILE_NAMES = (:mw006, :mw060, :mw125, :mw166)
 
 # Ascending powers, unnormalized integrated fields in SI units.
@@ -24,6 +32,7 @@ function default_bta_operating_point(; kwargs...)
         quad_currents=(256.0, 406.0, 543.0, 556.0, 128.0, 797.0, 727.0, 0.0,
                        466.0, 460.0, 300.0, 72.0, 288.0, 0.0, 153.0),
         dipole_currents=(221.2, 3385.6, 106.6, 409.4), #(251.0, 3421.0, 112.0, 423.0),
+        septum_scales=(1.0, 1.0), # D6 (F6 in the lattice), L20
         corrector_currents=(0.0, 0.0, 0.0, 0.0, 0.0),
         E_ref=4.5 * 938.272e6 / 1.79285,
         species_ref=Species("proton"),
@@ -41,6 +50,8 @@ _horner(x, coefficients) = evalpoly(x, coefficients)
 Physical integrated fields, before rigidity normalization. As in Booster UQ,
 each factor scales a complete calibrated quadrupole field, not just the linear
 coefficient of its current polynomial. Both QH2 pieces receive the same factor.
+The `septum_kn0l` entries are integrated normalized strengths. Each pair is
+scaled by the corresponding dimensionless `op.septum_scales` entry.
 """
 function bta_fields(op; quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATION)
     length(op.quad_currents) == 15 || throw(DimensionMismatch("15 quad currents required"))
@@ -61,5 +72,10 @@ function bta_fields(op; quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATI
     correctors = map(1:5) do j
         _horner(op.corrector_currents[j], j == 1 ? calibration.dv007 : calibration.corrector)
     end
-    (; quadrupoles, dipoles, correctors)
+    scales = hasproperty(op, :septum_scales) ? op.septum_scales : (1.0, 1.0)
+    length(scales) == 2 || throw(DimensionMismatch("two septum scales required (D6, L20)"))
+    all(isfinite, scales) || throw(ArgumentError("septum scales must be finite"))
+    septum_kn0l = NamedTuple{keys(_SEPTUM_KN0L)}(
+        map(*, values(_SEPTUM_KN0L), (scales[1], scales[1], scales[2], scales[2])))
+    (; quadrupoles, dipoles, correctors, septum_kn0l)
 end

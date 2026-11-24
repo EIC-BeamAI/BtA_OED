@@ -7,7 +7,7 @@ using LinearAlgebra
 using Random
 using SpecialFunctions: erf
 
-export QUAD_NAMES, QUAD_ELEMENT_NAMES, CORRECTOR_NAMES, PROFILE_NAMES,
+export QUAD_NAMES, QUAD_ELEMENT_NAMES, CORRECTOR_NAMES, SEPTUM_NAMES, PROFILE_NAMES,
     DEFAULT_BTA_CALIBRATION, default_bta_operating_point, bta_fields,
     bta_lattice, set_bta_fields!, set_bta_misalignments!,
     BeamMoments, default_beam_moments, beam_moments_from_twiss,
