@@ -1,6 +1,28 @@
-"""Uncoupled AGS target in canonical coordinates at the exit of patch_l20_3."""
+"""A5-only reference at the default BtA proton rigidity.
+
+Use the 30 mm position bump modeled in C-A/AP/335 and the zero-slope
+adjustment and A5 current limit of C-A/AP/217. The bump is relative to
+the unperturbed orbit. `closed_orbit` is the bumped circulating centroid
+at the nominal BtA handoff. Positive x is inward.
+
+const AGS_INJECTION_DESIGN = let bump_x = -30e-3, a5_current = 1100.0
+    # AP-217 §§7 and 10. The unbumped orbit is 0.13 in inward of Beam Code.
+    a5_kick = -asin(1.8718e-5 * a5_current / 7.20516515)
+    (; bump_x, bump_slope=0.0, a5_current, a5_kick,
+       drift_to_a1=0.46608, # nominal survey distance to upstream A1 steel face
+       closed_orbit=(0.13INCH + bump_x, 0.0, 0.0, 0.0))
+end
+"""
+
+"""Incoming centroid and uncoupled optics at the BtA–AGS handoff.
+
+The centroid was obtained by tracking the bumped orbit from the handoff to
+A5 and solving for an incoming ray at the same position with the opposite
+momentum offset to the kicker. The AGS model starts at A1, after the
+handoff drift in `AGS_INJECTION_DESIGN`.
+"""
 const AGS_INJECTION_TARGET = (
-    centroid=(0.05, 0.024, 0.0, 0.0),
+    centroid=(-0.07657772, -0.00228634, 0.0, 0.0),
     x=(beta=19.841, alpha=-1.5733,
        dispersion=(-2.066, -0.1474)),
     y=(beta=11.727, alpha=1.026,

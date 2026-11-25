@@ -17,9 +17,8 @@ From the repository root, run `julia --project=. -e 'using Pkg; Pkg.instantiate(
 ```julia
 using BeamlineExperiments, Random
 
-box = control_box(:quadrupole)
-op = box.op
-beam = UncoupledBeamState(; centroid=box.centroid)
+op = default_bta_operating_point()
+beam = UncoupledBeamState()
 
 r = simulate_bta(beam; op, rng=MersenneTwister(42))
 score = injection_mismatch(beam; op)
@@ -28,8 +27,5 @@ score = injection_mismatch(beam; op)
 
 The Jacobian describes how the predicted measurements change with magnet currents and entrance beam parameters in the loss-free model. Particle tracking estimates the fraction lost to physical apertures separately.
 
-Use `default_bta_operating_point(; septum_scales=(1.02, 0.98))` to scale the
-D6 and L20 septum pairs, respectively. A scale of `1.0` gives the nominal
-strength. Both magnets in a pair share the same scale.
 
 See [profile inference](examples/profile_inference.jl) for a synthetic-data likelihood and [injection matching](examples/injection_matching.jl) for a differentiable control objective.

@@ -39,7 +39,7 @@ PALS:
           y_max: 0.0135636
           y_min: -0.0135636
         MagneticMultipoleP:
-          Kn0L: -0.06357983682313131
+          Bn0L: -0.4581032329810224
           Ks0L: 0.0
           tilt0: 0.0
         TrackingP:
@@ -96,7 +96,7 @@ PALS:
           y_max: 0.0173736
           y_min: -0.0173736
         MagneticMultipoleP:
-          Kn0L: -0.06749439000164284
+          Bn0L: -0.486308235641549
           Ks0L: 0.0
           tilt0: 0.0
         TrackingP:
@@ -2486,6 +2486,26 @@ PALS:
             tracking_method: DriftKick
         kind: Drift
         length: 2.1898203599999997
+    - patch_l20_inlet:
+        PatchP:
+          x_offset: 0.028195638721308237
+          x_rot: 0.0
+          y_offset: 0.0
+          y_rot: -0.030252373701235045
+          z_offset: 0.0032789709869201376
+          z_rot: 0.0
+        TrackingP:
+          SciBmad:
+            fringe_at: BothEnds
+            method_parameters: {}
+            n_slices: 1
+            rad_damping: false
+            rad_fluctuations: false
+            step: 1
+            step_meaning: NSteps
+            tracking_method: Exact
+        kind: Patch
+        length: 0.0
     - dhl20a:
         ApertureP:
           aperture_active: true
@@ -2497,7 +2517,7 @@ PALS:
           y_max: 0.0235458
           y_min: -0.0235458
         MagneticMultipoleP:
-          Kn0L: 0.03517626995141463
+          Bn0L: 0.44379144835965795
           Ks0L: 0.0
           tilt0: 0.0
         TrackingP:
@@ -2554,7 +2574,7 @@ PALS:
           y_max: 0.0235458
           y_min: -0.0235458
         MagneticMultipoleP:
-          Kn0L: 0.033764235502361385
+          Bn0L: 0.4211496192385418
           Ks0L: 0.0
           tilt0: 0.0
         TrackingP:
@@ -2606,16 +2626,16 @@ PALS:
           aperture_shifts_with_body: true
           location: EXIT_END
           shape: ELLIPTICAL
-          x_max: 0.10794999999999999
-          x_min: -0.10794999999999999
+          x_max: 0.08941435
+          x_min: -0.12648565
           y_max: 0.10794999999999999
           y_min: -0.10794999999999999
         PatchP:
-          x_offset: 0.06508749999999999
+          x_offset: 0.08362315
           x_rot: 0.0
           y_offset: 0.0
-          y_rot: 0.0
-          z_offset: 0.0
+          y_rot: -0.000097789
+          z_offset: 0.20875625
           z_rot: 0.0
         TrackingP:
           SciBmad:
@@ -2735,6 +2755,7 @@ PALS:
           - bcm
           - qv15
           - dr042
+          - patch_l20_inlet
           - dhl20a
           - patch_l20_1
           - dhl20b

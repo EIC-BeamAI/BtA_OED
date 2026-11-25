@@ -5,14 +5,7 @@ const QUAD_ELEMENT_NAMES = ((:qv1,), (:qh2a, :qh2b), (:qv3,), (:qh4,),
     (:qv5,), (:qh6,), (:qv7,), (:qh8,), (:qv9,), (:qh10,), (:qv11,),
     (:qh12,), (:qv13,), (:qh14,), (:qv15,))
 const CORRECTOR_NAMES = (:dv007, :dv030, :dh127, :dh158, :dv181)
-const SEPTUM_NAMES = (:d6, :l20)
-# Nominal integrated normalized strengths, with the original split within each pair.
-const _SEPTUM_KN0L = (
-    dhf6a=-7.51π/180 * 49.213/(49.213+52.243),
-    dhf6b=-7.51π/180 * 52.243/(49.213+52.243),
-    dhl20a=(3+57/60)π/180 * (39+45/64)/(39+45/64 + 38+7/64),
-    dhl20b=(3+57/60)π/180 * (38+7/64)/(39+45/64 + 38+7/64),
-)
+const SEPTUM_NAMES = (:f6, :l20)
 const PROFILE_NAMES = (:mw006, :mw060, :mw125, :mw166)
 
 # Ascending powers, unnormalized integrated fields in SI units.
@@ -25,15 +18,19 @@ const DEFAULT_BTA_CALIBRATION = (
     long_dipole=(1.103e-2, 2.141e-3, 2.217e-6, -4.204e-9, 1.555e-12),
     dv007=(1.586e-4, 6.589e-4, -9.611e-8),
     corrector=(1.000e-4, 7.944e-4, -2.479e-6),
+    f6=(-1.0196e-4,), # AGS Studies Report 283,
+    l20=(6.0149e-5,), # AP-473 gap estimate, AP-217 effective length
 )
 
+"""Currents matched to the nominal AGS injection target for the default entrance beam."""
 function default_bta_operating_point(; kwargs...)
     defaults = (
-        quad_currents=(256.0, 406.0, 543.0, 556.0, 128.0, 797.0, 727.0, 0.0,
-                       466.0, 460.0, 300.0, 72.0, 288.0, 0.0, 153.0),
-        dipole_currents=(221.2, 3385.6, 106.6, 409.4), #(251.0, 3421.0, 112.0, 423.0),
-        septum_scales=(1.0, 1.0), # D6 (F6 in the lattice), L20
-        corrector_currents=(0.0, 0.0, 0.0, 0.0, 0.0),
+        quad_currents=(253.17947, 405.17948, 535.65982, 555.94257, 150.49952,
+                       839.84366, 727.11538, 73.97488, 490.55114, 445.84191,
+                       291.59416, 74.43011, 234.96670, 273.88004, 146.92053),
+        dipole_currents=(218.51883, 3393.67603, 100.56230, 419.88626),
+        septum_currents=(9196.38385, 14598.37000), # F6, L20
+        corrector_currents=(-0.68541, 0.31214, 5.53796, 19.81779, -0.28446),
         E_ref=4.5 * 938.272e6 / 1.79285,
         species_ref=Species("proton"),
     )
@@ -50,8 +47,8 @@ _horner(x, coefficients) = evalpoly(x, coefficients)
 Physical integrated fields, before rigidity normalization. As in Booster UQ,
 each factor scales a complete calibrated quadrupole field, not just the linear
 coefficient of its current polynomial. Both QH2 pieces receive the same factor.
-The `septum_kn0l` entries are integrated normalized strengths. Each pair is
-scaled by the corresponding dimensionless `op.septum_scales` entry.
+The `septum_fields` entries are integrated dipole fields in T·m. Both magnets
+in each pair use the same conductor current from `op.septum_currents`.
 """
 function bta_fields(op; quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATION)
     length(op.quad_currents) == 15 || throw(DimensionMismatch("15 quad currents required"))
@@ -72,10 +69,16 @@ function bta_fields(op; quad_factors=ones(15), calibration=DEFAULT_BTA_CALIBRATI
     correctors = map(1:5) do j
         _horner(op.corrector_currents[j], j == 1 ? calibration.dv007 : calibration.corrector)
     end
-    scales = hasproperty(op, :septum_scales) ? op.septum_scales : (1.0, 1.0)
-    length(scales) == 2 || throw(DimensionMismatch("two septum scales required (D6, L20)"))
-    all(isfinite, scales) || throw(ArgumentError("septum scales must be finite"))
-    septum_kn0l = NamedTuple{keys(_SEPTUM_KN0L)}(
-        map(*, values(_SEPTUM_KN0L), (scales[1], scales[1], scales[2], scales[2])))
-    (; quadrupoles, dipoles, correctors, septum_kn0l)
+    currents = op.septum_currents
+    length(currents) == 2 || throw(DimensionMismatch("two septum currents required (F6, L20)"))
+    all(isfinite, currents) || throw(ArgumentError("septum currents must be finite"))
+    f6 = only(calibration.f6) * currents[1]
+    l20 = only(calibration.l20) * currents[2]
+    septum_fields = (
+        dhf6a=f6 * 49.213 / (49.213 + 52.243),
+        dhf6b=f6 * 52.243 / (49.213 + 52.243),
+        dhl20a=l20 * (44.2337 + 0.920) / 88.0037,
+        dhl20b=l20 * (41.930 + 0.920) / 88.0037,
+    )
+    (; quadrupoles, dipoles, correctors, septum_fields)
 end

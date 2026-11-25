@@ -15,19 +15,25 @@ central(f, x, h) = (f(x + h) - f(x - h)) / (2h)
     lattice = bta_lattice(op)
     @test last(lattice.line).name == "patch_l20_3"
     beam = default_beam_moments()
-    @test transport_coordinates(beam.mean; observations=(:end,)) ==
-          transport_coordinates(beam.mean; observations=(:patch_l20_3,))
+    terminal = transport_coordinates(beam.mean; observations=(:end,))
+    @test terminal == transport_coordinates(beam.mean; observations=(:patch_l20_3,))
+    @test terminal[1:4] ≈ collect(AGS_INJECTION_TARGET.centroid) atol=1e-7
     # Previously ignored supply settings must now reach every corresponding piece.
     changed = default_bta_operating_point(
         dipole_currents=(260.0, 3421.0, 120.0, 423.0),
-        septum_scales=(0.98, 1.02),
+        septum_currents=op.septum_currents .* (0.98, 1.02),
         quad_currents=setentry(op.quad_currents, 10.0, 14))
     moved = bta_lattice(changed)
     byname(bl) = Dict(Symbol(e.name) => e for e in bl.line)
     a, b = byname(lattice), byname(moved)
+    @test sum(a[name].dy_rot for name in (:patch_l20_inlet, :patch_l20_1, :patch_l20_2)) ≈
+          -(6 + 38/60)π/180
     septa = (:dhf6a, :dhf6b, :dhl20a, :dhl20b)
-    @test [b[name].Kn0L for name in septa] ≈
-          [a[name].Kn0L for name in septa] .* [0.98, 0.98, 1.02, 1.02]
+    @test [b[name].Bn0L for name in septa] ≈
+          [a[name].Bn0L for name in septa] .* [0.98, 0.98, 1.02, 1.02]
+    @test a[:patch_l20_3].PatchParams ≈ b[:patch_l20_3].PatchParams
+    off = bta_fields(default_bta_operating_point(; septum_currents=(0.0, 0.0)))
+    @test all(iszero, off.septum_fields)
     for name in (:dh1_u, :dh1_d, :dh4_u, :dh4_d, :qh14)
         @test a[name].BMultipoleParams.n != b[name].BMultipoleParams.n
     end
@@ -196,12 +202,14 @@ end
     @test_throws ArgumentError cached(changed)
 
     t = AGS_INJECTION_TARGET
-    matched = beam_moments_from_twiss(; beta_x=t.x.beta, alpha_x=t.x.alpha,
+    matched = beam_moments_from_twiss(; centroid=t.centroid,
+        beta_x=t.x.beta, alpha_x=t.x.alpha,
         beta_y=t.y.beta, alpha_y=t.y.alpha, eta_x=t.x.dispersion[1],
         eta_px=t.x.dispersion[2], sigma_delta=5e-4)
     score(b) = injection_mismatch(b; epsilon_x=1e-6, epsilon_y=1e-6)
     @test score(matched).cost ≈ 0 atol=1e-14
-    shots = [BeamMoments([0., p, 0., 0., 0., 0.], matched.covariance) for p in (-1e-4, 1e-4)]
+    shots = [BeamMoments(matched.mean + [0., p, 0., 0., 0., 0.], matched.covariance)
+             for p in (-1e-4, 1e-4)]
     @test score(aggregate_beam(shots)).x.excess ≈ t.x.beta * 1e-8 / (2e-6)
     @test score(first(shots)).x.centroid ≈ t.x.beta * 1e-8 / (2e-6)
 end

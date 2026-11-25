@@ -6,6 +6,18 @@ const BEND_RADIUS = 541.378 * INCH
 function _bta_geometry()
     inch = INCH
     ρ = BEND_RADIUS
+    l20_exit_length = (-3/8 + 3+1/4 + 5+11/32)inch
+    # D37-M-0426/0428: the bore is 1.015 - 0.250 in outward of the socket chord.
+    # Beam Code is 0.03525 in outward of that chord (D37-M-0413 and AGS AP-164).
+    l20_exit_bore_x = -(1.015 - 0.250 - 0.03525)inch
+    # D37-M-0431/0427: the downstream bore center is inward of the rectangular
+    # channel center by this distance, via the common flange datum.
+    l20_channel_to_bore = (1.490 + 2+3/16 - 0.406 - 0.709)inch
+    l20_exit_dx = l20_channel_to_bore - l20_exit_bore_x
+    # Register the weldment to that bore while retaining the surveyed Beam Code
+    # exit frame. Express the transverse shift in the incoming BtA frame.
+    l20_registration = 0.11200881 - l20_exit_dx
+    l20_inlet_angle = (6 + 38/60)π/180
     [
         # Drawing IDs (F6 septum): 
         #       d36-m-1256-5-1,
@@ -23,7 +35,6 @@ function _bta_geometry()
         SBend(; name="dhf6a",
             L=50.19inch,
             #g_ref=0,
-            Kn0L=_SEPTUM_KN0L.dhf6a,
             aperture_shape=ApertureShape.Rectangular,
             aperture_at=ApertureAt.Entrance,
             x1_limit=-1.440inch,
@@ -43,7 +54,6 @@ function _bta_geometry()
         SBend(; name="dhf6b",
             L=56.28inch,
             #g_ref=0,
-            Kn0L=_SEPTUM_KN0L.dhf6b,
             aperture_shape=ApertureShape.Rectangular,
             aperture_at=ApertureAt.Entrance,
             x1_limit=-1.440inch,
@@ -811,13 +821,16 @@ function _bta_geometry()
         #       d37-m-0427-5,
         #       d37-m-0431-5,
         #       d37-m-0432-5
-        #       
-        #       
-        #       
+        # Put the nominal BtA-to-weldment yaw at the inlet flange.
+        # Installation (0426): 6°38′. Internal weldment (0431): 4°54′.
+        Patch(; name="patch_l20_inlet",
+            dx=l20_registration * cos(l20_inlet_angle),
+            dz=l20_registration * sin(l20_inlet_angle),
+            dy_rot=-(1 + 44/60)π/180,
+        ),
         SBend(; name="dhl20a",
             L=(45 + 13/16 + 1/2)inch,
             #g_ref=0,
-            Kn0L=_SEPTUM_KN0L.dhl20a,
             aperture_shape=ApertureShape.Rectangular,
             aperture_at=ApertureAt.Entrance,
             x1_limit=-1.490inch,
@@ -837,7 +850,6 @@ function _bta_geometry()
         SBend(; name="dhl20b",
             L=(1/2 + 42 + 3/8)inch,
             #g_ref=0,
-            Kn0L=_SEPTUM_KN0L.dhl20b,
             aperture_shape=ApertureShape.Rectangular,
             aperture_at=ApertureAt.Entrance,
             x1_limit=-1.490inch,
@@ -854,13 +866,18 @@ function _bta_geometry()
             y1_limit=-0.927inch,
             y2_limit=0.927inch,
         ),
+        # Propagate the QV15 survey center and heading (Booster TN 221) through
+        # the L20 mechanical layout to the nominal exit station. Tie the exit
+        # origin and yaw to the L20–A1 Beam Code axis. Local +x points inward.
         Patch(; name="patch_l20_3",
-            dx=(1.490 + 2+3/16 - 0.406 - 0.709)inch, # AGS injection target is zero at patch exit
-            L = (-3/8 + 3+1/4 + 5+11/32)inch,
+            dx=l20_exit_dx,
+            dy_rot=-9.7789e-5,
+            dz=l20_exit_length,
+            L=l20_exit_length,
             aperture_shape=ApertureShape.Elliptical,
             aperture_at=ApertureAt.Exit,
-            x1_limit=-4.25inch,
-            x2_limit=4.25inch,
+            x1_limit=l20_exit_bore_x - 4.25inch,
+            x2_limit=l20_exit_bore_x + 4.25inch,
             y1_limit=-4.25inch,
             y2_limit=4.25inch,
         )

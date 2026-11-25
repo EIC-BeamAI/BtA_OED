@@ -1,16 +1,16 @@
-function _normal_field(value, order; normalized=false)
+function _normal_field(value, order)
     z = zero(value)
-    BMultipoleParams([value], [z], [z], [order], [normalized], [true])
+    BMultipoleParams([value], [z], [z], [order], [false], [true])
 end
 
 # Write a field again whenever either value carries an AD tag. Primal equality
 # alone does not establish that two dual values have the same derivatives.
 _same_primal(a, b) = !(a isa ForwardDiff.Dual || b isa ForwardDiff.Dual) && isequal(a, b)
 
-function _set_normal_field!(element, value, order; normalized=false)
+function _set_normal_field!(element, value, order)
     group = element.BMultipoleParams
     if isnothing(group) || length(group.n) != 1 || !_same_primal(only(group.n), value)
-        element.BMultipoleParams = _normal_field(value, order; normalized)
+        element.BMultipoleParams = _normal_field(value, order)
     end
 end
 
@@ -43,8 +43,8 @@ function set_bta_fields!(lattice::Beamline, op;
             elements[name].BMultipoleParams = _normal_field(value, 1)
         end
     end
-    for (name, strength) in pairs(fields.septum_kn0l)
-        _set_normal_field!(elements[name], strength, 1; normalized=true)
+    for (name, field) in pairs(fields.septum_fields)
+        _set_normal_field!(elements[name], field, 1)
     end
     for (j, name) in enumerate(CORRECTOR_NAMES)
         field = fields.correctors[j]
